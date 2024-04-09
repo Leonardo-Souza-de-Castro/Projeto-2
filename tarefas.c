@@ -33,7 +33,8 @@ ERROS deletar(Tarefa tarefas[], int *pos){
     if(pos_deletar >= *pos || pos_deletar < 0)
         return NAO_ENCONTRADO;
 
-    for(int i = pos_deletar; i < *pos; i++){
+    int i = pos_deletar;
+    for(i; i < *pos; i++){
         tarefas[i].prioridade = tarefas[i+1].prioridade;
         strcpy(tarefas[i].categoria, tarefas[i+1].categoria);
         strcpy(tarefas[i].descricao,  tarefas[i+1].descricao);
@@ -48,7 +49,8 @@ ERROS listar(Tarefa tarefas[], int *pos){
     if(*pos == 0)
         return SEM_TAREFAS;
 
-    for(int i=0; i<*pos; i++){
+    int i=0;
+    for(i; i<*pos; i++){
         printf("Pos: %d\t", i+1);
         printf("Prioridade: %d\t", tarefas[i].prioridade);
         printf("Categoria: %s\t", tarefas[i].categoria);
@@ -60,6 +62,24 @@ ERROS listar(Tarefa tarefas[], int *pos){
 
 ERROS salvar(Tarefa tarefas[], int *pos){
     FILE *f = fopen("tarefas.bin", "wb");
+    if(f == NULL)
+        return ABRIR;
+
+    int qtd = fwrite(tarefas, TOTAL, sizeof(Tarefa), f);
+    if(qtd == 0)
+        return ESCREVER;
+
+    qtd = fwrite(pos, 1, sizeof(int), f);
+    if(qtd == 0)
+        return ESCREVER;
+
+    if(fclose(f))
+        return FECHAR;
+
+    return OK;
+}
+ERROS salvar_texto(Tarefa tarefas[], int *pos, char nome_arquivo[100]){
+    FILE *f = fopen("tarefas.txt", "w");
     if(f == NULL)
         return ABRIR;
 

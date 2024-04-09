@@ -14,6 +14,7 @@ ERROS criar(Tarefa tarefas[], int *pos);
 ERROS deletar(Tarefa tarefas[], int *pos);
 ERROS listar(Tarefa tarefas[], int *pos);
 ERROS salvar(Tarefa tarefas[], int *pos);
+ERROS salvar_texto(Tarefa tarefas[], int *pos, char nome_arquivo[100]);
 ERROS carregar(Tarefa tarefas[], int *pos);
 
 void clearBuffer();
