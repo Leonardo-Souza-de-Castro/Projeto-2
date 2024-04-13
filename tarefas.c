@@ -12,20 +12,12 @@ ERROS criar(Tarefa tarefas[], int *pos){
         scanf("%d", &prioridade);
         if ((prioridade > 0) && (prioridade < 11)){
             tarefas[*pos].prioridade = prioridade;
-            
-        
-        // else if (prioridade > 10)
-        //     printf("Número de prioridade excedido, digite novamente por favor!");
         }   
         else{
             printf("Numero de prioridade nao cabivel!\n");
         }
         
-        }while(prioridade <= 1 && prioridade >= 10);
-            
-    // clearBuffer();
-    // printf("Entre com a prioridade: ");
-    // fgets(tarefas[*pos].prioridade, 100, stdin);
+        }while(prioridade < 1 || prioridade > 10);
 
     clearBuffer();
     printf("Entre com a categoria: ");
@@ -70,7 +62,30 @@ ERROS deletar(Tarefa tarefas[], int *pos){
 ERROS listar(Tarefa tarefas[], int *pos){
     if(*pos == 0)
         return SEM_TAREFAS;
-
+    printf("Quais categorias voce gostaria de listar: ");
+    char filtro[100];
+    clearBuffer();
+    fgets(filtro, 100, stdin);
+    int count = 0;
+  
+    if (strlen(filtro) == 1){
+        int i=0;
+        for(i; i<*pos; i++){
+            printf("Pos: %d\t", i+1);
+            printf("Prioridade: %d\t", tarefas[i].prioridade);
+            printf("Categoria: %s\t", tarefas[i].categoria);
+            printf("Descricao: %s\n", tarefas[i].descricao);
+        }
+    }
+    else{
+        int i = 0;
+        for (i; i < *pos; i++)
+        {
+            if(strncmp(filtro, tarefas[i].categoria, 100) == 0){
+                printf("Categoria: %s | Prioridade: %d | Descricao: %s \n", tarefas[i].categoria, tarefas[i].prioridade, tarefas[i].descricao);
+            }
+        }
+    }
 
     int i = 0;
     for(i=0; i<*pos; i++){
