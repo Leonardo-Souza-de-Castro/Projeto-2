@@ -49,12 +49,38 @@ ERROS listar(Tarefa tarefas[], int *pos){
     if(*pos == 0)
         return SEM_TAREFAS;
 
-    int i=0;
-    for(i; i<*pos; i++){
-        printf("Pos: %d\t", i+1);
-        printf("Prioridade: %d\t", tarefas[i].prioridade);
-        printf("Categoria: %s\t", tarefas[i].categoria);
-        printf("Descricao: %s\n", tarefas[i].descricao);
+    char filtro[100];
+
+    clearBuffer();
+    printf("Quais categorias voce gostaria de listar: ");
+    fgets(filtro, 100, stdin);
+
+    if (strlen(filtro) == 1){
+        int i=0;
+        for(i; i<*pos; i++){
+            printf("Pos: %d\t", i+1);
+            printf("Prioridade: %d\t", tarefas[i].prioridade);
+            printf("Categoria: %s\t", tarefas[i].categoria);
+            printf("Descricao: %s\n", tarefas[i].descricao);
+        }
+    }
+    else{
+        int i = 0;
+        for (i; i < *pos; i++)
+        {
+            if(strncmp(filtro, tarefas[i].categoria, 100) == 0){
+                printf("Categoria: %s | Prioridade: %d | Descricao: %s \n", tarefas[i].categoria, tarefas[i].prioridade, tarefas[i].descricao);
+            }
+        }
+    }
+    printf("Voce gostaria de salvar tarefas de alguma categoria especifica? (s/n)");
+    char opcao[10];
+    fgets(opcao, 10, stdin);
+    if(strcmp(opcao, "s")){
+        salvar_texto(tarefas, *pos, filtro);
+    }
+    else{
+        printf("nn funciona");
     }
 
     return OK;
@@ -78,21 +104,37 @@ ERROS salvar(Tarefa tarefas[], int *pos){
 
     return OK;
 }
-ERROS salvar_texto(Tarefa tarefas[], int *pos, char nome_arquivo[100]){
-    FILE *f = fopen("tarefas.txt", "w");
+ERROS salvar_texto(Tarefa tarefas[], int *pos, char filtro[100]){
+    printf("Qual o nome do arquivo que você quer utilizar (Não inserir extenção do arquivo)");
+    char nome_arquivo[300];
+    fgets(nome_arquivo, 300, stdin);
+
+
+    // FILE *f = fopen(strcat(nome_arquivo,".txt"), "w");
+    FILE *f = fopen("teste.txt", "w");
     if(f == NULL)
         return ABRIR;
 
-    int qtd = fwrite(tarefas, TOTAL, sizeof(Tarefa), f);
-    if(qtd == 0)
-        return ESCREVER;
+    // int qtd = fwrite(tarefas, TOTAL, sizeof(Tarefa), f);
+    int qtd = 0;
+    // fprintf(f, "teste");
+    // if(qtd == 0)
+    //     return ESCREVER;
 
-    qtd = fwrite(pos, 1, sizeof(int), f);
-    if(qtd == 0)
-        return ESCREVER;
+    // qtd = fwrite(pos, 1, sizeof(int), f);
+    // if(qtd == 0)
+    //     return ESCREVER;
 
-    if(fclose(f))
-        return FECHAR;
+    // if(fclose(f))
+    //     return FECHAR;
+    int i = 0;
+    for (i; i < *pos; i++)
+    {
+        if(strncmp(filtro, tarefas[*pos].categoria, 100)){
+            fprintf(f, "Categoria: %s | Prioridade: %s | Descricao: %s", tarefas[*pos].categoria, tarefas[*pos].prioridade, tarefas[*pos].descricao);
+        }
+    }
+    
 
     return OK;
 }
