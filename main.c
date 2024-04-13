@@ -7,9 +7,6 @@ int main(){
     Tarefa tarefas[TOTAL];
     int pos;
     ERROS resultado;
-    // ERROS erro = fs[4](tarefas, &pos);
-    // if(erro != OK)
-    //     pos = 0;
 
     int opcao;
     do{
@@ -52,15 +49,6 @@ int main(){
                     printf("Erro: Erro ao escrever no arquivo\n");
                   break;
                 }
-                
-        else
-            printf("Sair...\n");
 
     } while(opcao >= 0);
-
-    // resultado = fs[3](tarefas, &pos);
-    // if(resultado != OK)
-    //     printf("Erro ao salvar as tarefas: %d\n", resultado);
-    
-    return 0;
 }

@@ -82,17 +82,12 @@ ERROS listar(Tarefa tarefas[], int *pos){
         for (i; i < *pos; i++)
         {
             if(strncmp(filtro, tarefas[i].categoria, 100) == 0){
-                printf("Categoria: %s | Prioridade: %d | Descricao: %s \n", tarefas[i].categoria, tarefas[i].prioridade, tarefas[i].descricao);
+                printf("Pos: %d\t", i+1);
+                printf("Prioridade: %d\t", tarefas[i].prioridade);
+                printf("Categoria: %s\t", tarefas[i].categoria);
+                printf("Descricao: %s\n", tarefas[i].descricao);
             }
         }
-    }
-
-    int i = 0;
-    for(i=0; i<*pos; i++){
-        printf("Pos: %d\t", i+1);
-        printf("Prioridade: %d\t", tarefas[i].prioridade);
-        printf("Categoria: %s\t", tarefas[i].categoria);
-        printf("Descricao: %s\n", tarefas[i].descricao);
     }
 
     return OK;
